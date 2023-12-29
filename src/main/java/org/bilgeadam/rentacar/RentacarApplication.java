@@ -1,5 +1,6 @@
 package org.bilgeadam.rentacar;
 
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
