@@ -35,6 +35,16 @@ public class CarCategoryController {
         return new ResponseEntity<>(categoryService.getCarCategory(id), HttpStatus.OK);
     }
 
+    @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public void updateCarCategory(@RequestBody CarCategory carCategory,@PathVariable(value="id") Long id){
+        categoryService.updateCarCategory(carCategory,id);
+    }
 
+    @PutMapping("/delete/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public void softDeleteCarCategory(@PathVariable(value = "id") Long id){
+        categoryService.softDeleteCarCategory(id);
+    }
 
 }

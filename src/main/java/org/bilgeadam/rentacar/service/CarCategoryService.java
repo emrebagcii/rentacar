@@ -16,10 +16,14 @@ public class CarCategoryService {
     private final CarCategoryRepository categoryRepository;
 
     public CarCategory addCarCategory(CarCategory carCategory) {
+
+        if (categoryRepository.existsByCategoryName(carCategory.getCategoryName())){
+            throw new IllegalArgumentException("Bu kategori zaten mevcut");
+        }
+
         carCategory.setActive(setStatus(carCategory));
         return categoryRepository.save(carCategory);
 
-        //TODO:aynı isimde kategori bir daha eklenmesin
     }
 
     public boolean categoryExist(CarCategory carCategory) {
@@ -54,7 +58,12 @@ public class CarCategoryService {
         return categoryRepository.findById(id).get();
     }
 
-        //TODO: update methodu id alınarak yapılacak
-        //TODO:soft-delete
+    public void updateCarCategory(CarCategory carCategory,Long id){
+         categoryRepository.updateCarCategoryById(carCategory.getCategoryName(),id);
+    }
+
+    public void softDeleteCarCategory(Long id){
+        categoryRepository.softDeleteCarCategoryById(id);
+    }
 
 }
