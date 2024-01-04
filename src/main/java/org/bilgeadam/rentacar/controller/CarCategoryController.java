@@ -17,7 +17,7 @@ public class CarCategoryController {
 
     private final CarCategoryService categoryService;
 
-    @PostMapping
+    @PostMapping("/addCategory")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<CarCategory> addCarCategory(@RequestBody CarCategory carCategory) {
         return new ResponseEntity<>(categoryService.addCarCategory(carCategory), HttpStatus.OK);
@@ -35,7 +35,7 @@ public class CarCategoryController {
         return new ResponseEntity<>(categoryService.getCarCategory(id), HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public void updateCarCategory(@RequestBody CarCategory carCategory,@PathVariable(value="id") Long id){
         categoryService.updateCarCategory(carCategory,id);
@@ -46,5 +46,7 @@ public class CarCategoryController {
     public void softDeleteCarCategory(@PathVariable(value = "id") Long id){
         categoryService.softDeleteCarCategory(id);
     }
+
+
 
 }

@@ -2,6 +2,7 @@ package org.bilgeadam.rentacar.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.bilgeadam.rentacar.model.Car;
+import org.bilgeadam.rentacar.model.CarCategory;
 import org.bilgeadam.rentacar.service.CarService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,10 +18,10 @@ public class CarController {
 
     private final CarService carService;
 
-    @PostMapping
+    @PostMapping("/addCar")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Car> addCar(@RequestBody Car car){
-        return new ResponseEntity<>(carService.addCar(car), HttpStatus.OK);
+        return new ResponseEntity<>(carService.addCar(car),HttpStatus.OK);
     }
 
     @GetMapping
@@ -29,10 +30,23 @@ public class CarController {
         return new ResponseEntity<>(carService.getCarList(),HttpStatus.OK);
     }
 
-    @GetMapping("{/id}")
+    @GetMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
     public ResponseEntity<Car> getCar(@PathVariable(value = "id") Long id){
         return new ResponseEntity<>(carService.getCar(id),HttpStatus.OK);
+    }
+
+    @PutMapping("/update/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<Car> updateCar(@RequestBody Car car){
+        Car updatedCar = carService.updateCar(car);
+        return new ResponseEntity<Car>(updatedCar,HttpStatus.OK);
+    }
+
+    @PutMapping("/delete/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public void softDeleteCar(@PathVariable(value = "id") Long id){
+        carService.softDeleteCar(id);
     }
 
 }

@@ -31,12 +31,6 @@ public class User implements UserDetails {
     @Column(name="nationality_number")
     private String nationalityNumber;
 
-    @Column(name = "driver_licence_no")
-    private String driverLicenceNo;
-
-    @Column(name="driver_licence_type")
-    private String driverLicenceType;
-
     @Column(name="email")
     private String email;
 
