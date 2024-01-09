@@ -1,6 +1,12 @@
 package org.bilgeadam.rentacar.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
+import org.bilgeadam.rentacar.dto.RentingRequest;
 import org.bilgeadam.rentacar.model.Renting;
 import org.bilgeadam.rentacar.service.RentingService;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,10 +22,11 @@ public class RentingController {
 
     private final RentingService rentingService;
 
+
     @PostMapping
     @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
-    public void doRent(@RequestBody Renting renting){
-        rentingService.doRent(renting);
+    public void doRent(@RequestBody RentingRequest rentingRequest){
+        rentingService.doRent(rentingRequest);
     }
 
 }
