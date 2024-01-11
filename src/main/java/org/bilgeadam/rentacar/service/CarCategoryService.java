@@ -6,6 +6,7 @@ import org.bilgeadam.rentacar.model.CarCategory;
 import org.bilgeadam.rentacar.repository.CarCategoryRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -20,35 +21,12 @@ public class CarCategoryService {
         if (categoryRepository.existsByCategoryName(carCategory.getCategoryName())){
             throw new IllegalArgumentException("Bu kategori zaten mevcut");
         }
-
-        carCategory.setActive(setStatus(carCategory));
+        carCategory.setActive(true);
+        carCategory.setCreatedDate(LocalDateTime.now());
         return categoryRepository.save(carCategory);
-
     }
 
-    public boolean categoryExist(CarCategory carCategory) {
-        boolean result;
-        CarCategory existCategory = categoryRepository.findByCategoryName(carCategory.getCategoryName());
 
-        if (existCategory == null) {
-            result = true;
-        } else {
-            result = false;
-        }
-        return result;
-    }
-
-    public boolean setStatus(CarCategory carCategory) {
-
-        boolean isActive;
-
-        if (categoryExist(carCategory) == true) {
-            isActive=true;
-        }else{
-            isActive=false;
-        }
-        return isActive;
-    }
 
     public List<CarCategory> getCarCategoryList() {
         return categoryRepository.findAll();

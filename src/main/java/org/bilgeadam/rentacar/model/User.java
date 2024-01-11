@@ -54,7 +54,7 @@ public class User implements UserDetails {
     private Role roles;
 
     @Column(name="is_active")
-    private String isActive;
+    private boolean isActive;
 
     @Column(name = "created_date")
     private LocalDateTime createdDate;

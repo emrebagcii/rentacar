@@ -3,9 +3,11 @@ package org.bilgeadam.rentacar.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.bilgeadam.rentacar.model.Car;
+import org.bilgeadam.rentacar.repository.CarDetailRepository;
 import org.bilgeadam.rentacar.repository.CarRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -15,43 +17,15 @@ public class CarService {
 
     private final CarRepository carRepository;
 
-    public Car addCar(Car car) {
 
-        if (carRepository.existsByBrandAndModelAndColorAndTransmissionAndFuelType(car.getBrand(), car.getModel(), car.getColor(), car.getTransmission(), car.getFuelType())) {
+    public Car addCar(Car car){
+
+        if (carRepository.existsByBrandAndModelAndColorAndTransmissionAndFuelTypeAndYear(car.getBrand(), car.getModel(), car.getColor(), car.getTransmission(), car.getFuelType(),car.getYear())) {
             throw new IllegalArgumentException("Bu araç zaten mevcut");
         }
-        car.setActive(setStatus(car));
-        return carRepository.save(car);
-    }
-
-    public boolean carExist(Car car) {
-
-        boolean result;
-        Car existingCar = carRepository.findByBrandAndModelAndColorAndTransmissionAndFuelType(car.getBrand(), car.getModel(), car.getColor(), car.getTransmission(), car.getFuelType());
-
-        if (existingCar != null
-                && existingCar.getBrand().equals(car.getBrand())
-                && existingCar.getModel().equals(car.getModel())
-                && existingCar.getColor().equals(car.getColor())
-                && existingCar.getTransmission() == car.getTransmission()
-                && existingCar.getFuelType() == car.getFuelType()) {
-            result = false;
-        } else {
-            result = true;
-        }
-        return result;
-    }
-
-    public boolean setStatus(Car car) {
-        boolean isActive;
-
-        if (carExist(car) == true) {
-            isActive = true;
-        } else {
-            isActive = false;
-        }
-
-        return isActive;
+        car.setActive(true);
+        car.setCreatedDate(LocalDateTime.now());
+        return  carRepository.save(car);
     }
 
     public List<Car> getCarList() {
@@ -64,10 +38,10 @@ public class CarService {
 
     public Car updateCar(Car car) {
 
-        if (carRepository.existsByBrandAndModelAndColorAndTransmissionAndFuelType(car.getBrand(), car.getModel(), car.getColor(), car.getTransmission(), car.getFuelType())) {
+        if (carRepository.existsByBrandAndModelAndColorAndTransmissionAndFuelTypeAndYear(car.getBrand(), car.getModel(), car.getColor(), car.getTransmission(), car.getFuelType(),car.getYear())) {
             throw new IllegalArgumentException("Bu araç zaten mevcut");
         }
-
+        car.setUpdatedDate(LocalDateTime.now());
         return carRepository.save(car);
     }
 

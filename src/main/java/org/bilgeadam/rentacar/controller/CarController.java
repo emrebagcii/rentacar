@@ -2,7 +2,6 @@ package org.bilgeadam.rentacar.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.bilgeadam.rentacar.model.Car;
-import org.bilgeadam.rentacar.model.CarCategory;
 import org.bilgeadam.rentacar.service.CarService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +39,7 @@ public class CarController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Car> updateCar(@RequestBody Car car){
         Car updatedCar = carService.updateCar(car);
-        return new ResponseEntity<Car>(updatedCar,HttpStatus.OK);
+        return new ResponseEntity<>(updatedCar,HttpStatus.OK);
     }
 
     @PutMapping("/delete/{id}")
