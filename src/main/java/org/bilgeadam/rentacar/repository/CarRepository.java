@@ -19,8 +19,12 @@ public interface CarRepository extends JpaRepository<Car, Long> {
     @Modifying
     void softDeleteCarById(@Param("id") Long id);
 
+    @Query("UPDATE Car c set c.availableCar = :countCar where c.id = :id")
+    @Modifying
+    void updateAvailableCarById(@Param("id") Long id, @Param("countCar") Integer countCar);
 
-
-
+    @Query("UPDATE Car c set c.availableCar = c.availableCar-1 where c.id = :id")
+    @Modifying
+    void updateRentingAvailableCarById(@Param("id") Long id);
 
 }

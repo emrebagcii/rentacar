@@ -25,7 +25,8 @@ public class CarService {
         }
         car.setActive(true);
         car.setCreatedDate(LocalDateTime.now());
-        return  carRepository.save(car);
+        car.setAvailableCar(0);
+        return carRepository.save(car);
     }
 
     public List<Car> getCarList() {

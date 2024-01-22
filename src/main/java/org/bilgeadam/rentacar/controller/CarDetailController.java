@@ -20,8 +20,8 @@ public class CarDetailController {
 
     @PostMapping("/addcardetail")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<CarDetail> addCarDetail(@RequestBody CarDetail carDetail) {
-        return new ResponseEntity<>(carDetailService.addCarDetail(carDetail), HttpStatus.OK);
+    public void addCarDetail(@RequestBody CarDetail carDetail) {
+        carDetailService.addCarDetail(carDetail);
     }
 
     @GetMapping

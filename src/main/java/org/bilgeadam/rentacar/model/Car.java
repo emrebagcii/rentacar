@@ -38,6 +38,9 @@ public class Car {
 
     private String image;
 
+    @Column(name="available_car")
+    private Integer availableCar;
+
     @Column(name = "rent_price")
     private Double rentPrice;
 

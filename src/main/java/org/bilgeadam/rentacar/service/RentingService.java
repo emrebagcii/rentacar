@@ -4,8 +4,10 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.bilgeadam.rentacar.dto.RentingRequest;
 import org.bilgeadam.rentacar.model.Car;
+import org.bilgeadam.rentacar.model.CarDetail;
 import org.bilgeadam.rentacar.model.Renting;
 import org.bilgeadam.rentacar.model.UserHistory;
+import org.bilgeadam.rentacar.repository.CarDetailRepository;
 import org.bilgeadam.rentacar.repository.CarRepository;
 import org.bilgeadam.rentacar.repository.RentingRepository;
 import org.bilgeadam.rentacar.repository.UserHistoryRepository;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -22,11 +25,11 @@ public class RentingService {
 
     private final RentingRepository rentingRepository;
     private final CarRepository carRepository;
+    private final CarDetailRepository carDetailRepository;
     private final UserHistoryRepository historyRepository;
 
     //TODO: mapStruct kullan
     public void doRent(RentingRequest rentingRequest){
-
         Renting renting = new Renting();
         renting.setCarId(rentingRequest.getCarId());
         renting.setUserId(rentingRequest.getUserId());
@@ -39,10 +42,11 @@ public class RentingService {
         renting.setRentingDay(rentingRequest.getRentingDay());
         renting.setRentingAmount(carRepository.findById(rentingRequest.getCarId()).get().getRentPrice()* rentingRequest.getRentingDay());
         renting.setCreatedDate(LocalDateTime.now());
-
         Renting createdRenting = rentingRepository.save(renting);
-        saveUserHistory(createdRenting);
 
+        carDetailRepository.updateIsRentingById(selectCarDetail(createdRenting.getCarId()));
+        carRepository.updateRentingAvailableCarById(createdRenting.getCarId());
+        saveUserHistory(createdRenting);
     }
 
     public void saveUserHistory(Renting renting){
@@ -52,7 +56,10 @@ public class RentingService {
         historyRepository.save(userHistory);
     }
 
+    public Long selectCarDetail(Long carId){
+        Long maxKilometerCarId;
+        maxKilometerCarId = carDetailRepository.findRentingByCarIdAndIsActiveTrueAndIsRentingFalse(carId);
+        return maxKilometerCarId;
+    }
 
-
-    
 }
