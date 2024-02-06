@@ -42,7 +42,7 @@ public class SecurityConfig {
         http.cors(AbstractHttpConfigurer::disable);
 
         http.authorizeHttpRequests(a -> a
-                        .requestMatchers("/user/addUser", "/user/getToken", "/user/log").permitAll()
+                        .requestMatchers("/user/addUser", "/user/getToken", "/user/log","/api/**").permitAll()
                         .requestMatchers(AUTH_WHITE_LIST).permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         // .requestMatchers("/actuator/**", "**/actuator/**").permitAll()
