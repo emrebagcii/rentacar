@@ -2,6 +2,7 @@ package org.bilgeadam.rentacar.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.bilgeadam.rentacar.dto.CarListDto;
 import org.bilgeadam.rentacar.model.Car;
 import org.bilgeadam.rentacar.repository.CarDetailRepository;
 import org.bilgeadam.rentacar.repository.CarRepository;
@@ -51,4 +52,8 @@ public class CarService {
     }
 
     //TODO: aracın kiralanıp kiralanmadığı durumun belirlendiği method yazılacak
+
+    public List<CarListDto> getAllCarListWithCategory(){
+        return carRepository.getAllCarListWithCategory();
+    }
 }

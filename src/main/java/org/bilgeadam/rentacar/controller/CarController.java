@@ -1,6 +1,7 @@
 package org.bilgeadam.rentacar.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.bilgeadam.rentacar.dto.CarListDto;
 import org.bilgeadam.rentacar.model.Car;
 import org.bilgeadam.rentacar.service.CarService;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,12 @@ public class CarController {
     @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
     public ResponseEntity<List<Car>> getCarList(){
         return new ResponseEntity<>(carService.getCarList(),HttpStatus.OK);
+    }
+
+    @GetMapping("getCarList")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public List<CarListDto> getAllCarListWithCategory(){
+        return new ResponseEntity<>(carService.getAllCarListWithCategory(),HttpStatus.OK).getBody();
     }
 
     @GetMapping("/{id}")

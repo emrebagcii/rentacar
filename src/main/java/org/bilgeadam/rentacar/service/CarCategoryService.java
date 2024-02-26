@@ -26,10 +26,12 @@ public class CarCategoryService {
         return categoryRepository.save(carCategory);
     }
 
-
-
     public List<CarCategory> getCarCategoryList() {
         return categoryRepository.findAll();
+    }
+
+    public List<CarCategory> getCarCategoryListActive() {
+        return categoryRepository.getCarCategoryListActive();
     }
 
     public CarCategory getCarCategory(Long id) {

@@ -29,6 +29,12 @@ public class CarCategoryController {
         return new ResponseEntity<>(categoryService.getCarCategoryList(), HttpStatus.OK);
     }
 
+    @GetMapping("/active")
+    @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
+    public ResponseEntity<List<CarCategory>> getCarCategoryListActive(){
+        return new ResponseEntity<>(categoryService.getCarCategoryListActive(),HttpStatus.OK);
+    }
+
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
     public ResponseEntity<CarCategory> getCarCategory(@PathVariable(value = "id") Long id) {

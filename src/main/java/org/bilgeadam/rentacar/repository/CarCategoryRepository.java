@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface CarCategoryRepository extends JpaRepository<CarCategory,Long> {
 
@@ -21,5 +23,8 @@ public interface CarCategoryRepository extends JpaRepository<CarCategory,Long> {
     @Query("UPDATE CarCategory c set c.isActive= false where c.id= :id")
     @Modifying
     void softDeleteCarCategoryById(@Param("id") Long id);
+
+    @Query("SELECT c FROM CarCategory c where c.isActive=true" )
+    List<CarCategory> getCarCategoryListActive();
 
 }

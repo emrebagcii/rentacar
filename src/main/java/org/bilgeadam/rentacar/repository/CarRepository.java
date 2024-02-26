@@ -1,5 +1,6 @@
 package org.bilgeadam.rentacar.repository;
 
+import org.bilgeadam.rentacar.dto.CarListDto;
 import org.bilgeadam.rentacar.enums.FuelType;
 import org.bilgeadam.rentacar.enums.Transmission;
 import org.bilgeadam.rentacar.model.Car;
@@ -8,6 +9,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface CarRepository extends JpaRepository<Car, Long> {
@@ -27,4 +30,6 @@ public interface CarRepository extends JpaRepository<Car, Long> {
     @Modifying
     void updateRentingAvailableCarById(@Param("id") Long id);
 
+    @Query("select new org.bilgeadam.rentacar.dto.CarListDto(cc.categoryName ,c.brand ,c.model ,c.color ,c.year ,c.transmission ,c.fuelType ,c.rentPrice ,c.availableCar ,c.isActive)from Car c inner join CarCategory cc on cc.id = c.categoryId")
+    List<CarListDto> getAllCarListWithCategory();
 }
