@@ -15,6 +15,10 @@ import org.bilgeadam.rentacar.enums.Transmission;
 @AllArgsConstructor
 public class CarListDto {
 
+    private Long id;
+
+    private Long categoryId;
+
     private String categoryName;
 
     private String brand;

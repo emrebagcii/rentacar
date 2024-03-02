@@ -4,7 +4,6 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.bilgeadam.rentacar.dto.CarListDto;
 import org.bilgeadam.rentacar.model.Car;
-import org.bilgeadam.rentacar.repository.CarDetailRepository;
 import org.bilgeadam.rentacar.repository.CarRepository;
 import org.springframework.stereotype.Service;
 
@@ -38,14 +37,26 @@ public class CarService {
         return carRepository.findById(id).get();
     }
 
-    public Car updateCar(Car car) {
+    //TODO:update servisi baştan yazılacak
+    /*
+    public CarListDto updateCar(CarListDto carListDto, Long id) {
 
-        if (carRepository.existsByBrandAndModelAndColorAndTransmissionAndFuelTypeAndYear(car.getBrand(), car.getModel(), car.getColor(), car.getTransmission(), car.getFuelType(),car.getYear())) {
+        Car updatedCar = new Car();
+
+        if (carRepository.existsByBrandAndModelAndColorAndTransmissionAndFuelTypeAndYear(carListDto.getBrand(), carListDto.getModel(), carListDto.getColor(), carListDto.getTransmission(), carListDto.getFuelType(),carListDto.getYear())) {
             throw new IllegalArgumentException("Bu araç zaten mevcut");
         }
-        car.setUpdatedDate(LocalDateTime.now());
-        return carRepository.save(car);
-    }
+
+        updatedCar.setBrand(carListDto.getBrand());
+        updatedCar.setModel(carListDto.getModel());
+        updatedCar.setCategoryId(carListDto.getCategoryId());
+        updatedCar.setColor(carListDto.getColor());
+        updatedCar.setTransmission(carListDto.getTransmission());
+        updatedCar.setFuelType(carListDto.getFuelType());
+        updatedCar.setRentPrice(carListDto.getRentPrice());
+        updatedCar.setUpdatedDate(LocalDateTime.now());
+        return carRepository.save(updatedCar);
+    }*/
 
     public void softDeleteCar(Long id) {
         carRepository.softDeleteCarById(id);

@@ -30,6 +30,6 @@ public interface CarRepository extends JpaRepository<Car, Long> {
     @Modifying
     void updateRentingAvailableCarById(@Param("id") Long id);
 
-    @Query("select new org.bilgeadam.rentacar.dto.CarListDto(cc.categoryName ,c.brand ,c.model ,c.color ,c.year ,c.transmission ,c.fuelType ,c.rentPrice ,c.availableCar ,c.isActive)from Car c inner join CarCategory cc on cc.id = c.categoryId")
+    @Query("select new org.bilgeadam.rentacar.dto.CarListDto(c.id,c.categoryId,cc.categoryName ,c.brand ,c.model ,c.color ,c.year ,c.transmission ,c.fuelType ,c.rentPrice ,c.availableCar ,c.isActive)from Car c inner join CarCategory cc on cc.id = c.categoryId")
     List<CarListDto> getAllCarListWithCategory();
 }

@@ -42,12 +42,13 @@ public class CarController {
         return new ResponseEntity<>(carService.getCar(id),HttpStatus.OK);
     }
 
+    //TODO:baştan yazılacak
+    /*
     @PutMapping("/update/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<Car> updateCar(@RequestBody Car car){
-        Car updatedCar = carService.updateCar(car);
-        return new ResponseEntity<>(updatedCar,HttpStatus.OK);
-    }
+    public ResponseEntity<CarListDto> updateCar(@RequestBody CarListDto carListDto,@PathVariable(value="id") Long id){
+        return new ResponseEntity<>(carService.updateCar(carListDto,id),HttpStatus.OK);
+    }*/
 
     @PutMapping("/delete/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
