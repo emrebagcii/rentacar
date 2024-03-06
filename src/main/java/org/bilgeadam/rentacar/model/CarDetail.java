@@ -24,6 +24,8 @@ public class CarDetail {
     @Column(name="car_plate")
     private String carPlate;
 
+    private String color;
+
     @Column(name = "is_renting")
     private boolean isRenting;
 

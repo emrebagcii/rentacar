@@ -2,6 +2,7 @@ package org.bilgeadam.rentacar.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.bilgeadam.rentacar.dto.CarDetailDto;
 import org.bilgeadam.rentacar.model.Car;
 import org.bilgeadam.rentacar.model.CarDetail;
 import org.bilgeadam.rentacar.repository.CarDetailRepository;
@@ -42,6 +43,10 @@ public class CarDetailService {
         return carDetailRepository.findAll();
     }
 
+    public List<CarDetailDto> getInventoryList(){
+        return carDetailRepository.getInventoryList();
+    }
+
     public CarDetail getCarDetail(Long id){
         return carDetailRepository.findById(id).get();
     }
@@ -53,6 +58,10 @@ public class CarDetailService {
         }
         carDetail.setUpdatedDate(LocalDateTime.now());
         return carDetailRepository.save(carDetail);
+    }
+
+    public void endRentingCar(Long id){
+        carDetailRepository.endRentingCar(id);
     }
 
 }

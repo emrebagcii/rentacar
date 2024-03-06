@@ -1,6 +1,7 @@
 package org.bilgeadam.rentacar.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.bilgeadam.rentacar.dto.CarDetailDto;
 import org.bilgeadam.rentacar.model.Car;
 import org.bilgeadam.rentacar.model.CarDetail;
 import org.bilgeadam.rentacar.service.CarDetailService;
@@ -30,6 +31,12 @@ public class CarDetailController {
         return new ResponseEntity<>(carDetailService.getCarDetailList(), HttpStatus.OK);
     }
 
+    @GetMapping("/inventory")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public List<CarDetailDto> getInventoryList(){
+        return new ResponseEntity<>(carDetailService.getInventoryList(),HttpStatus.OK).getBody();
+    }
+
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
     public ResponseEntity<CarDetail> getCarDetail(@PathVariable(value = "id") Long id) {
@@ -41,6 +48,12 @@ public class CarDetailController {
     public ResponseEntity<CarDetail> updateCar(@RequestBody CarDetail carDetail){
         CarDetail updatedCarDetail = carDetailService.updateCarDetail(carDetail);
         return new ResponseEntity<>(updatedCarDetail,HttpStatus.OK);
+    }
+
+    @PutMapping("/endrent/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public void endRentingCar(@PathVariable(value = "id") Long id){
+        carDetailService.endRentingCar(id);
     }
 
 }

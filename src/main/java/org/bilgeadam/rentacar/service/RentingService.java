@@ -2,6 +2,7 @@ package org.bilgeadam.rentacar.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.bilgeadam.rentacar.dto.RentDto;
 import org.bilgeadam.rentacar.dto.RentingRequest;
 import org.bilgeadam.rentacar.model.Car;
 import org.bilgeadam.rentacar.model.CarDetail;
@@ -42,6 +43,7 @@ public class RentingService {
         renting.setRentingDay(rentingRequest.getRentingDay());
         renting.setRentingAmount(carRepository.findById(rentingRequest.getCarId()).get().getRentPrice()* rentingRequest.getRentingDay());
         renting.setCreatedDate(LocalDateTime.now());
+        renting.setRentingState(true);
         Renting createdRenting = rentingRepository.save(renting);
 
         carDetailRepository.updateIsRentingById(selectCarDetail(createdRenting.getCarId()));
@@ -60,6 +62,22 @@ public class RentingService {
         Long maxKilometerCarId;
         maxKilometerCarId = carDetailRepository.findRentingByCarIdAndIsActiveTrueAndIsRentingFalse(carId);
         return maxKilometerCarId;
+    }
+
+    public List<Renting> getRentingList(){
+        return rentingRepository.findAll();
+    }
+
+    public Renting getRenting(Long id){
+        return rentingRepository.findById(id).get();
+    }
+
+    public void endRenting(Long id){
+        rentingRepository.endRenting(id);
+    }
+
+    public RentDto getRentingByCarIdAndRentingState(Long carId){
+        return rentingRepository.getRentingByCarIdAndRentingState(carId);
     }
 
 }

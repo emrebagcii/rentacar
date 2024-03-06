@@ -14,9 +14,9 @@ import java.util.List;
 
 @Repository
 public interface CarRepository extends JpaRepository<Car, Long> {
-    boolean existsByBrandAndModelAndColorAndTransmissionAndFuelTypeAndYear(String brand, String model, String color, Transmission transmission, FuelType fuelType, Integer year);
+    boolean existsByBrandAndModelAndTransmissionAndFuelTypeAndYear(String brand, String model,  Transmission transmission, FuelType fuelType, Integer year);
 
-    Car findByBrandAndModelAndColorAndTransmissionAndFuelType(String brand, String model, String color, Transmission transmission, FuelType fuelType);
+    Car findByBrandAndModelAndTransmissionAndFuelType(String brand, String model, Transmission transmission, FuelType fuelType);
 
     @Query("UPDATE Car c set c.isActive= false where c.id= :id")
     @Modifying
@@ -30,6 +30,6 @@ public interface CarRepository extends JpaRepository<Car, Long> {
     @Modifying
     void updateRentingAvailableCarById(@Param("id") Long id);
 
-    @Query("select new org.bilgeadam.rentacar.dto.CarListDto(c.id,c.categoryId,cc.categoryName ,c.brand ,c.model ,c.color ,c.year ,c.transmission ,c.fuelType ,c.rentPrice ,c.availableCar ,c.isActive)from Car c inner join CarCategory cc on cc.id = c.categoryId")
+    @Query("select new org.bilgeadam.rentacar.dto.CarListDto(c.id,c.categoryId,cc.categoryName ,c.brand ,c.model ,c.year ,c.transmission ,c.fuelType ,c.rentPrice ,c.availableCar ,c.isActive)from Car c inner join CarCategory cc on cc.id = c.categoryId")
     List<CarListDto> getAllCarListWithCategory();
 }

@@ -49,4 +49,7 @@ public class Renting {
     @Column(name="created_date")
     private LocalDateTime createdDate;
 
+    @Column(name="renting_state")
+    private boolean rentingState;
+
 }

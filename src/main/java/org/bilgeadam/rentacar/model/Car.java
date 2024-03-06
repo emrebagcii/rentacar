@@ -25,8 +25,6 @@ public class Car {
 
     private String model;
 
-    private String color;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "fuel_type")
     private FuelType fuelType;

@@ -20,7 +20,7 @@ public class CarService {
 
     public Car addCar(Car car){
 
-        if (carRepository.existsByBrandAndModelAndColorAndTransmissionAndFuelTypeAndYear(car.getBrand(), car.getModel(), car.getColor(), car.getTransmission(), car.getFuelType(),car.getYear())) {
+        if (carRepository.existsByBrandAndModelAndTransmissionAndFuelTypeAndYear(car.getBrand(), car.getModel(), car.getTransmission(), car.getFuelType(),car.getYear())) {
             throw new IllegalArgumentException("Bu araç zaten mevcut");
         }
         car.setActive(true);

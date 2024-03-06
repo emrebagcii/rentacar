@@ -1,7 +1,5 @@
 package org.bilgeadam.rentacar.dto;
 
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,11 +11,9 @@ import org.bilgeadam.rentacar.enums.Transmission;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CarListDto {
+public class CarDetailDto {
 
     private Long id;
-
-    private Long categoryId;
 
     private String categoryName;
 
@@ -27,15 +23,16 @@ public class CarListDto {
 
     private Integer year;
 
-    @Enumerated(EnumType.STRING)
+    private String color;
+
     private Transmission transmission;
 
-    @Enumerated(EnumType.STRING)
     private FuelType fuelType;
 
-    private double rentPrice;
-
-    private Integer availableCar;
+    private String carPlate;
 
     private boolean isActive;
+
+    private boolean isRenting;
+
 }
