@@ -62,7 +62,6 @@ public class CarService {
         carRepository.softDeleteCarById(id);
     }
 
-    //TODO: aracın kiralanıp kiralanmadığı durumun belirlendiği method yazılacak
 
     public List<CarListDto> getAllCarListWithCategory(){
         return carRepository.getAllCarListWithCategory();

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RentingRepository extends JpaRepository<Renting, Long> {
 
-    @Query("update Renting r set r.rentingState=true where r.id=:id")
+    @Query("update Renting r set r.rentingState=false where r.id=:id")
     @Modifying
     void endRenting(@Param("id") Long id);
 

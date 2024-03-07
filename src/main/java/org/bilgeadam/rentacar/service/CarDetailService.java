@@ -60,8 +60,4 @@ public class CarDetailService {
         return carDetailRepository.save(carDetail);
     }
 
-    public void endRentingCar(Long id){
-        carDetailRepository.endRentingCar(id);
-    }
-
 }

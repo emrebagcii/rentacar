@@ -15,6 +15,7 @@ import org.bilgeadam.rentacar.repository.UserHistoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -32,6 +33,8 @@ public class RentingService {
     //TODO: mapStruct kullan
     public void doRent(RentingRequest rentingRequest){
         Renting renting = new Renting();
+        Integer rentingDay;
+
         renting.setCarId(rentingRequest.getCarId());
         renting.setUserId(rentingRequest.getUserId());
         renting.setDriverLicenceType(rentingRequest.getDriverLicenceType());
@@ -40,8 +43,9 @@ public class RentingService {
         renting.setDeliveryCityId(rentingRequest.getDeliveryCityId());
         renting.setRentingDate(rentingRequest.getRentingDate());
         renting.setDeliveryDate(rentingRequest.getDeliveryDate());
-        renting.setRentingDay(rentingRequest.getRentingDay());
-        renting.setRentingAmount(carRepository.findById(rentingRequest.getCarId()).get().getRentPrice()* rentingRequest.getRentingDay());
+        rentingDay= Math.toIntExact(ChronoUnit.DAYS.between(rentingRequest.getRentingDate(), rentingRequest.getDeliveryDate()));
+        renting.setRentingDay(rentingDay);
+        renting.setRentingAmount(carRepository.findById(rentingRequest.getCarId()).get().getRentPrice()* rentingDay);
         renting.setCreatedDate(LocalDateTime.now());
         renting.setRentingState(true);
         Renting createdRenting = rentingRepository.save(renting);
@@ -73,11 +77,21 @@ public class RentingService {
     }
 
     public void endRenting(Long id){
+
+        Renting renting = new Renting();
+        renting=getRenting(id);
+
         rentingRepository.endRenting(id);
+        endRentingCar(renting.getCarId());
+
     }
 
     public RentDto getRentingByCarIdAndRentingState(Long carId){
         return rentingRepository.getRentingByCarIdAndRentingState(carId);
+    }
+
+    public void endRentingCar(Long carId){
+        carDetailRepository.endRentingCar(carId);
     }
 
 }

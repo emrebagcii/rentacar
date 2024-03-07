@@ -15,6 +15,8 @@ public class CarDetailDto {
 
     private Long id;
 
+    private Long carId;
+
     private String categoryName;
 
     private String brand;

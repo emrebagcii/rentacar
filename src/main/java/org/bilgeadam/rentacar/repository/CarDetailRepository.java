@@ -24,7 +24,7 @@ public interface CarDetailRepository extends JpaRepository<CarDetail, Long> {
     @Modifying
     void updateIsRentingById(@Param("id") Long id);
 
-    @Query("select new org.bilgeadam.rentacar.dto.CarDetailDto(cd.id, cc.categoryName, c.brand, c.model, c.year, cd.color, c.transmission, c.fuelType, cd.carPlate, cd.isActive, cd.isRenting) \n" +
+    @Query("select new org.bilgeadam.rentacar.dto.CarDetailDto(cd.id , cd.carId  ,cc.categoryName, c.brand, c.model, c.year, cd.color, c.transmission, c.fuelType, cd.carPlate, cd.isActive, cd.isRenting) \n" +
             "from Car c\n" +
             "inner join CarDetail cd on cd.carId=c.id\n" +
             "inner join CarCategory cc on cc.id=c.categoryId")

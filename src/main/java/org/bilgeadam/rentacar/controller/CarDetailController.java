@@ -50,10 +50,4 @@ public class CarDetailController {
         return new ResponseEntity<>(updatedCarDetail,HttpStatus.OK);
     }
 
-    @PutMapping("/endrent/{id}")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public void endRentingCar(@PathVariable(value = "id") Long id){
-        carDetailService.endRentingCar(id);
-    }
-
 }
